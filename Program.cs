@@ -59,6 +59,15 @@ namespace dt
             }
         }
 
+        public static void DoOtherStuff()
+        {
+            using(var scope = Container.BeginLifetimeScope())
+            {
+                var otherThing = scope.Resolve<IOther>();
+                otherThing.DoStuff();
+            }
+        }
+
         static async Task Main(string[] args)
         {
             // Console.WriteLine("Hello World!");
@@ -77,7 +86,12 @@ namespace dt
             var generator = new ProxyGenerator();
             var interceptor = new AsyncProfilerInterceptor();
             var messageMakerProxy = generator.CreateInterfaceProxyWithTargetInterface<IAsyncMessageMaker>(messageMaker, interceptor);
+            var otherProxy = generator.CreateInterfaceProxyWithTargetInterface<IOther>(new ConcreteOther(), interceptor);
+
+            builder.Register<IOther>(t => otherProxy);
             builder.Register<IAsyncMessageMaker>(t => messageMakerProxy);
+
+
 
             // builder.RegisterType<MeanMessageMaker>()
             //        .As<IMessageMaker>()
@@ -95,8 +109,8 @@ namespace dt
             Container = builder.Build();
             ServiceProvider = new AutofacServiceProvider(Container);
             
-            WriteMessage();
             await WriteMessageAsync();
+            DoOtherStuff();
         }
     }
 }
