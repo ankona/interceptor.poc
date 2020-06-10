@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace dt
+namespace InterceptorPOC
 {
     public class MeanMessageMaker : IMessageMaker
     {

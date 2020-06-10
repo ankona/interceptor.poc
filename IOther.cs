@@ -1,4 +1,4 @@
-namespace dt
+namespace InterceptorPOC
 {
     public interface IOther
     {

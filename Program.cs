@@ -2,12 +2,10 @@
 using Autofac;
 using Microsoft.Extensions.DependencyInjection;
 using Autofac.Extensions.DependencyInjection;
-using Autofac.Extras.DynamicProxy;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-// using Castle.DynamicProxy;
 
-namespace dt
+namespace InterceptorPOC
 {
     class Program
     {

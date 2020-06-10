@@ -1,7 +1,3 @@
-// using Autofac.Extensions.DependencyInjection;
-// using Autofac;
-// using Microsoft.Extensions.DependencyInjection;
-// using Autofac.Extras.DynamicProxy;
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -9,7 +5,7 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using StackExchange.Profiling;
 
-namespace dt
+namespace InterceptorPOC
 {
     public class ProfilerInterceptor : IInterceptor
     {

@@ -1,6 +1,4 @@
-using System;
-
-namespace dt
+namespace InterceptorPOC
 {
     public class Messenger
     {
