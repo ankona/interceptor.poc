@@ -1,8 +1,9 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using InterceptorPOC.Definition;
 
-namespace InterceptorPOC
+namespace InterceptorPOC.Implementation
 {
     public class AsyncMessageMaker : IMessageMaker
     {

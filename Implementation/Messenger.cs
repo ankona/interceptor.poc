@@ -1,4 +1,6 @@
-namespace InterceptorPOC
+using InterceptorPOC.Definition;
+
+namespace InterceptorPOC.Implementation
 {
     public class Messenger
     {
@@ -9,8 +11,8 @@ namespace InterceptorPOC
             _messageMaker = messageMaker;
         }
 
-        public void TellMe() => _messageMaker.WriteMessage();
+        public void GetMessage() => _messageMaker.WriteMessage();
 
-        public void Preach() => _messageMaker.Preach();
+        public void GetAnotherMessage() => _messageMaker.Preach();
     }
 }

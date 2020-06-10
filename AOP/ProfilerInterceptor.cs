@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using StackExchange.Profiling;
 
-namespace InterceptorPOC
+namespace InterceptorPOC.AOP
 {
     public class ProfilerInterceptor : IInterceptor
     {
@@ -87,45 +87,6 @@ namespace InterceptorPOC
                 invocation.Proceed();
             }
             Console.WriteLine($"Exiting {methodName}.");
-        }
-    }
-
-    public class ExInterceptor : IInterceptor
-    {
-        private string MethodName { get;set ; }
-
-        public void Intercept(IInvocation invocation)
-        {
-            MethodName = $"{invocation.Method.DeclaringType.Name}.{invocation.Method.Name}";
-            if (invocation.Method.DeclaringType.IsAbstract)
-            {
-                MethodName = $"{invocation.TargetType.FullName}.{invocation.Method.Name}";
-            }
-            Console.WriteLine($"Executing {MethodName}.");
-
-            invocation.Proceed();
-            var method = invocation.MethodInvocationTarget;
-            var isAsync = method.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
-            if (isAsync && typeof(Task).IsAssignableFrom(method.ReturnType))
-            {
-                invocation.ReturnValue = InterceptAsync((dynamic)invocation.ReturnValue);
-            }
-
-            // Console.WriteLine($"Exiting {MethodName}.");
-            Console.WriteLine($"Exiting {MethodName}.");
-        }
-
-        private async Task InterceptAsync(Task task)
-        {
-            await task.ConfigureAwait(false);
-            Console.WriteLine($"Continuing {MethodName}.");
-        }
-
-        private  async Task<T> InterceptAsync<T>(Task<T> task)
-        {
-            T result = await task.ConfigureAwait(false);
-            Console.WriteLine($"Continuing {MethodName}.");
-            return result;
         }
     }
 }

@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Autofac.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using InterceptorPOC.Definition;
+using InterceptorPOC.Implementation;
+using InterceptorPOC.AOP;
 
 namespace InterceptorPOC
 {

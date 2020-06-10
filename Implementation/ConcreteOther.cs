@@ -1,6 +1,7 @@
 using System;
+using InterceptorPOC.Definition;
 
-namespace InterceptorPOC
+namespace InterceptorPOC.Implementation
 {
     public class ConcreteOther : IOther
     {

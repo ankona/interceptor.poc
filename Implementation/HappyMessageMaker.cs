@@ -1,7 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using InterceptorPOC.Definition;
 
-namespace InterceptorPOC
+namespace InterceptorPOC.Implementation
 {
     public class HappyMessageMaker : IMessageMaker
     {

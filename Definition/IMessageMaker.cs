@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace InterceptorPOC
+namespace InterceptorPOC.Definition
 {
     public interface IMessageMaker
     {

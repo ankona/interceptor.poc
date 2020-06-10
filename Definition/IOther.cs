@@ -1,4 +1,4 @@
-namespace InterceptorPOC
+namespace InterceptorPOC.Definition
 {
     public interface IOther
     {
