@@ -14,31 +14,6 @@ namespace dt
         private static IContainer Container { get; set; }
         private static IServiceProvider ServiceProvider { get; set; }
 
-        public static double GetCourseAgeRelativeTo(DateTime courseDate, DateTime relativeTo)
-        {
-            Console.WriteLine($"courseDate={courseDate}, relativeTo={relativeTo}");
-            
-            var zeroTime = new DateTime(1, 1, 1);
-            var dateDiff = zeroTime + (relativeTo - courseDate);
-
-            var years = (dateDiff.Year - 1);
-            var months = (dateDiff.Month - 1);
-
-            var age = years + (months * 1.0) / 12;
-            return age;
-        }
-
-        public static double GetCourseAgeRelativeTo2(DateTime courseDate, DateTime relativeTo)
-        {
-            if (courseDate == default(DateTime) || relativeTo == default(DateTime))
-            {
-                throw new ArgumentOutOfRangeException($"Unable to compute relative age with invalid inputs. Params: [courseDate: {courseDate}, relativeTo: {relativeTo}]");
-            }
-
-            var dateDiff = relativeTo - courseDate;
-            return Math.Abs(dateDiff.TotalDays / 365);
-        }
-
         public static void WriteMessage()
         {
             using(var scope = Container.BeginLifetimeScope())
@@ -70,13 +45,6 @@ namespace dt
 
         static async Task Main(string[] args)
         {
-            // Console.WriteLine("Hello World!");
-
-            // var courseDate= new DateTime(2019, 11, 1);
-            // var relativeTo=new DateTime(2018, 9, 19);
-            // var age = GetCourseAgeRelativeTo(courseDate, relativeTo);
-            // Console.WriteLine($"courseAge in years: {age}");
-
             var serviceCollection = new ServiceCollection();
             
             var builder = new ContainerBuilder();
