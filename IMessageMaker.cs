@@ -7,11 +7,4 @@ namespace dt
         Task WriteMessage();
         Task Preach();
     }
-
-
-    public interface IAsyncMessageMaker
-    {
-        Task WriteMessage();
-        Task Preach();
-    }
 }

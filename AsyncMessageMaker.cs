@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace dt
 {
-    public class AsyncMessageMaker : IAsyncMessageMaker
+    public class AsyncMessageMaker : IMessageMaker
     {
         public async Task WriteMessage()
         {

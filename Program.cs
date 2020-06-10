@@ -43,7 +43,7 @@ namespace dt
         {
             using(var scope = Container.BeginLifetimeScope())
             {
-                var messageMaker = scope.Resolve<IAsyncMessageMaker>();
+                var messageMaker = scope.Resolve<IMessageMaker>();
                 messageMaker.WriteMessage();
                 messageMaker.Preach();
             }
@@ -53,7 +53,7 @@ namespace dt
         {
             using(var scope = Container.BeginLifetimeScope())
             {
-                var messageMaker = scope.Resolve<IAsyncMessageMaker>();
+                var messageMaker = scope.Resolve<IMessageMaker>();
                 await messageMaker.WriteMessage();
                 await messageMaker.Preach();
             }
@@ -85,26 +85,21 @@ namespace dt
             var messageMaker = new AsyncMessageMaker();
             var generator = new ProxyGenerator();
             var interceptor = new AsyncProfilerInterceptor();
-            var messageMakerProxy = generator.CreateInterfaceProxyWithTargetInterface<IAsyncMessageMaker>(messageMaker, interceptor);
+            var messageMakerProxy = generator.CreateInterfaceProxyWithTargetInterface<IMessageMaker>(messageMaker, interceptor);
             var otherProxy = generator.CreateInterfaceProxyWithTargetInterface<IOther>(new ConcreteOther(), interceptor);
 
             builder.Register<IOther>(t => otherProxy);
-            builder.Register<IAsyncMessageMaker>(t => messageMakerProxy);
-
-
+            builder.Register<IMessageMaker>(t => messageMakerProxy);
 
             // builder.RegisterType<MeanMessageMaker>()
             //        .As<IMessageMaker>()
-            //        .EnableInterfaceInterceptors()
-            //        .InterceptedBy(typeof(ProfilerInterceptor));
-
-            // builder.RegisterType<AsyncMessageMaker>()
-            //        .As<IAsyncMessageMaker>()
-            //        .EnableInterfaceInterceptors()
+            //        .EnableInterfaceInterceptors();
             //        .InterceptedBy(typeof(AsyncProfilerInterceptor));
 
-            // builder.Register(i => new AsyncProfilerInterceptor());
-            // builder.Register(i => new ExInterceptor());
+            // builder.RegisterType<AsyncMessageMaker>()
+            //        .As<IMessageMaker>()
+            //        .EnableInterfaceInterceptors();
+            //        .InterceptedBy(typeof(AsyncProfilerInterceptor));
 
             Container = builder.Build();
             ServiceProvider = new AutofacServiceProvider(Container);
