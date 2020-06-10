@@ -7,6 +7,7 @@ using Castle.DynamicProxy;
 using InterceptorPOC.Definition;
 using InterceptorPOC.Implementation;
 using InterceptorPOC.AOP;
+using Autofac.Extras.DynamicProxy;
 
 namespace InterceptorPOC
 {
@@ -15,13 +16,13 @@ namespace InterceptorPOC
         private static IContainer Container { get; set; }
         private static IServiceProvider ServiceProvider { get; set; }
 
-        public static void WriteMessage()
+        public static void WriteMessageViaMessenger()
         {
             using(var scope = Container.BeginLifetimeScope())
             {
-                var messageMaker = scope.Resolve<IMessageMaker>();
-                messageMaker.WriteMessage();
-                messageMaker.Preach();
+                var messageMaker = scope.Resolve<IMessenger>();
+                messageMaker.GetMessage();
+                messageMaker.GetAnotherMessage();
             }
         }
 
@@ -60,21 +61,20 @@ namespace InterceptorPOC
             builder.Register<IOther>(t => otherProxy);
             builder.Register<IMessageMaker>(t => messageMakerProxy);
 
-            // builder.RegisterType<MeanMessageMaker>()
-            //        .As<IMessageMaker>()
-            //        .EnableInterfaceInterceptors();
-            //        .InterceptedBy(typeof(AsyncProfilerInterceptor));
+            builder.RegisterType<Messenger>()
+                   .As<IMessenger>()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(ProfilerInterceptor));
 
-            // builder.RegisterType<AsyncMessageMaker>()
-            //        .As<IMessageMaker>()
-            //        .EnableInterfaceInterceptors();
-            //        .InterceptedBy(typeof(AsyncProfilerInterceptor));
+            builder.Register(i => new ProfilerInterceptor());
 
             Container = builder.Build();
             ServiceProvider = new AutofacServiceProvider(Container);
             
             await WriteMessageAsync();
             DoOtherStuff();
+
+            WriteMessageViaMessenger();
         }
     }
 }

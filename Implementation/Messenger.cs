@@ -2,7 +2,7 @@ using InterceptorPOC.Definition;
 
 namespace InterceptorPOC.Implementation
 {
-    public class Messenger
+    public class Messenger : IMessenger
     {
         private readonly IMessageMaker _messageMaker;
 
